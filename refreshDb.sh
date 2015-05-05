@@ -33,6 +33,8 @@ while IFS=' ' read -r  time daemon id name label; do	# read DB
 		deluge)
 			labelNew=$(grep -m 1 $id $delugeLabels | grep -o ': ".*"' | grep -o '[a-zA-Z0-9_-]*')		# get label from Deluge
 			;;
+		manual)
+			;;
 		*)
 			echo "Unknown daemon $daemon!" >&2
 			exit 2
