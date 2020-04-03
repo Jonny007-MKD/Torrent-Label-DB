@@ -32,6 +32,9 @@ while IFS=' ' read -r  time daemon id name label; do	# read DB
 		case $daemon in
 		deluge)
 			labelNew=$(grep -m 1 $id $delugeLabels | grep -o ': ".*"' | grep -o '[a-zA-Z0-9_-]*')		# get label from Deluge
+			if [ -n "$labelNew" ]; then
+				label=$labelNew;							# set label
+			fi
 			;;
 		manual)
 			;;
@@ -41,14 +44,8 @@ while IFS=' ' read -r  time daemon id name label; do	# read DB
 			;;
 		esac
 
-		if [ -n "$labelNew" ]; then
-			label=$labelNew;							# set label
-		fi
-
 		#echo $time $daemon $id $name $label
 		echo $time $daemon $id $name $label >> $db.tmp;	# keep in db
-	#else
-		#echo skipped $time $daemon $id $name $label
 	fi
 done < $db;
 
